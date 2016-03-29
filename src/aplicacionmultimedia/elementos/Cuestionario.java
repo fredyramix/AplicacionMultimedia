@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aplicacionmultimedia.cuestionario;
+package aplicacionmultimedia.elementos;
 
 import aplicacionmultimedia.AplicacionMultimedia;
 
@@ -43,7 +43,7 @@ public class Cuestionario extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cuestionario");
 
         jLabel1.setText("Nota: Todos los datos son opcionales");
@@ -54,7 +54,7 @@ public class Cuestionario extends javax.swing.JFrame {
         jButton1.setText("Empezar");
         jButton1.setPreferredSize(new java.awt.Dimension(110, 30));
 
-        jButton2.setText("Anterior");
+        jButton2.setText("Regresar");
         jButton2.setPreferredSize(new java.awt.Dimension(110, 30));
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -93,7 +93,7 @@ public class Cuestionario extends javax.swing.JFrame {
         jTextField4.setPreferredSize(new java.awt.Dimension(180, 25));
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Si", "No", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Si", "No" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(42, 25));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
