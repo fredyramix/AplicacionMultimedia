@@ -1,5 +1,5 @@
 
-# -*- coding: utf-8 -*-
+#-*- coding:utf-8 -*-
 
 import sys
 import os
@@ -19,8 +19,8 @@ class MenuUsuario(QtGui.QWidget):
         self.children = []
         self.datos = name
         self.archivo = archivo
-        self.rutaEstres = "/videoStrees.wmv"
-        self.rutaRelajante = "/videoRelajante.wmv"
+        self.rutaEstres = "/Videos/videoEstres.wmv"
+        self.rutaRelajante = "/Videos/videoRelajante.wmv"
         self.initUI()
 
     def initUI(self):
@@ -66,6 +66,32 @@ class MenuUsuario(QtGui.QWidget):
         self.children.append(nuevaVentana)
 
     def presentarCuestionario(self):
-        nuevaVentana = CuestionarioPrimeraParte.CuestionarioPrimeraParte(
+        nuevaVentana = Cuestionario.Cuestionario(
             name=self.datos, archivo="Cuestionarios/" + self.archivo)
         self.children.append(nuevaVentana)
+
+    def closeEvent(self, event):
+        msg = QtGui.QMessageBox()
+        msg.setWindowIcon(QtGui.QIcon('icon.jpg'))
+        msg.setWindowTitle('Aviso')
+        msg.setText(u'¿Estás seguro de salir?')
+        msg.addButton(QtGui.QPushButton('Aceptar'), QtGui.QMessageBox.YesRole)
+        msg.addButton(QtGui.QPushButton('Cancelar'), QtGui.QMessageBox.NoRole)
+
+        result = msg.exec_()
+
+        if result == 0:
+            event.accept()
+        elif result == 1:
+            event.ignore()
+
+
+def main():
+    app = QtGui.QApplication(sys.argv)
+    datos = "Prueba"
+    archivo = "P"
+    main_window = MenuUsuario(name=datos, archivo=archivo)
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()

@@ -1,5 +1,5 @@
 
-# -*- coding: utf-8 -*-
+#-*- coding:utf-8 -*-
 
 import threading
 import time
@@ -89,6 +89,21 @@ class ReproductorMultimedia(QtGui.QWidget):
                 archi.close()
                 tg.closeSerial()
                 break
+
+
+def main():
+    app = QtGui.QApplication(sys.argv)
+    rutaE = "/Video/videoEstres.wmv"
+    rutaR = "/Video/videoRelajante.wmv"
+    datos = "Prueba"
+    archivo = "P"
+    main_window = ReproductorMultimedia(
+        name=datos, archivo=archivo + "Estres", ruta=rutaE)
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
+
 
 ''' ************************* Clase para recolectar datos de la diadema ************************** '''
 # Copyright (c) 2009, Kai Groner
@@ -344,3 +359,18 @@ class ThinkGearEEGPowerData(ThinkGearData):
     _strfmt = 'ASIC EEG Power: %(value)r'
     _decode = staticmethod(lambda v: EEGPowerData(
         *struct.unpack('>8L', ''.join('\x00' + v[o:o + 3] for o in xrange(0, 24, 3)))))
+
+
+def main():
+    app = QtGui.QApplication(sys.argv)
+    datos = "Prueba"
+    archivoR = "PruebaRelajante"
+    rutaR = "/videoRelajante.wmv"
+    archivoE = "PruebaEstres"
+    rutaE = "/videoStrees.wmv"
+    main_window = ReproductorMultimedia(
+        name=datos, archivo=archivoE, ruta=rutaE)
+    sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()

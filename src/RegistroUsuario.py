@@ -1,9 +1,9 @@
 
-# -*- coding: utf-8 -*-
+#-*- coding:utf-8 -*-
 
 import sys
-from PyQt4 import QtGui
 import MenuUsuario
+from PyQt4 import QtGui
 
 
 class RegistroUsuario(QtGui.QWidget):
