@@ -15,21 +15,27 @@ class RegistroUsuario(QtGui.QWidget):
         self.iptApaterno = QtGui.QLineEdit(self)
         self.iptAmaterno = QtGui.QLineEdit(self)
         self.iptCorreoE = QtGui.QLineEdit(self)
-        self.iptEdad = QtGui.QLineEdit(self)
-        self.iptSemestre = QtGui.QLineEdit(self)
+        #self.iptSexo = QtGui.QLineEdit(self)
+        #self.iptEdad = QtGui.QLineEdit(self)
+        #self.iptSemestre = QtGui.QLineEdit(self)
+        self.tamCombo = 80
         self.initUI()
 
     def initUI(self):
         tamHorizontal = 350
-        tamVertical = 280
+        tamVertical = 320
         self.setFixedSize(tamHorizontal, tamVertical)
         self.setWindowTitle('Registra Usuario')
-        self.setWindowIcon(QtGui.QIcon('icon.jpg'))
+        self.setWindowIcon(QtGui.QIcon('Icon/icon.jpg'))
 
         marginLeftLbl = 25
         contTopLbl = 25
         marginLeftIpt = 105
         sizeIpt = 200
+
+        itemComboSexo = ["Masculino", "Femenino"]
+        itemComboEdad = ['17','18','19','20','21','22','23','24','25','26','27','28','29','30']
+        itemComboSemestre = ['1', '2', '3', '4', '5', '6', '7', '8']
 
         # Nombre
         lblNombre = QtGui.QLabel('Nombre:', self)
@@ -59,19 +65,34 @@ class RegistroUsuario(QtGui.QWidget):
         self.iptCorreoE.move(marginLeftLbl + marginLeftIpt, contTopLbl)
         contTopLbl += 35
 
+        # Sexo
+        lblSexo = QtGui.QLabel(u'Sexo:', self)
+        lblSexo.move(marginLeftLbl, contTopLbl)
+        self.comboSexo = QtGui.QComboBox(self)
+        self.comboSexo.addItems(itemComboSexo)
+        self.comboSexo.setMinimumWidth(self.tamCombo)
+        self.comboSexo.move(marginLeftLbl + marginLeftIpt + 119, contTopLbl)
+        contTopLbl += 35
+
         # Edad
         lblEdad = QtGui.QLabel(u'Edad:', self)
         lblEdad.move(marginLeftLbl, contTopLbl)
-        self.iptEdad.setMinimumWidth(sizeIpt)
-        self.iptEdad.move(marginLeftLbl + marginLeftIpt, contTopLbl)
+        self.comboEdad = QtGui.QComboBox(self)
+        self.comboEdad.addItems(itemComboEdad)
+        self.comboEdad.setMinimumWidth(self.tamCombo)
+        self.comboEdad.move(marginLeftLbl + marginLeftIpt + 119, contTopLbl)
         contTopLbl += 35
 
         # Semestre
         lblSemestre = QtGui.QLabel(u'Semestre:', self)
         lblSemestre.move(marginLeftLbl, contTopLbl)
-        self.iptSemestre.setMinimumWidth(sizeIpt)
-        self.iptSemestre.move(marginLeftLbl + marginLeftIpt, contTopLbl)
+        self.comboSemestre = QtGui.QComboBox(self)
+        self.comboSemestre.addItems(itemComboSemestre)
+        self.comboSemestre.setMinimumWidth(self.tamCombo)
+        self.comboSemestre.move(marginLeftLbl + marginLeftIpt + 119, contTopLbl)
+        contTopLbl += 35
 
+        # Boton Aceptar
         btnAceptar = QtGui.QPushButton('Ingresar', self)
         btnAceptar.clicked.connect(self.ingresarUsuario)
         tamHorizontalBtn = 100
@@ -87,16 +108,20 @@ class RegistroUsuario(QtGui.QWidget):
         aPaterno = str((self.iptApaterno.text()).toAscii())
         aMaterno = str((self.iptAmaterno.text()).toAscii())
         correoE = str((self.iptCorreoE.text()).toAscii())
-        edad = str((self.iptEdad.text()).toAscii())
-        semestre = str((self.iptSemestre.text()).toAscii())
+        edad = str(self.comboEdad.currentText())
+        sexo = str(self.comboSexo.currentText())
+        semestre = str(self.comboSemestre.currentText())
 
         datos = nombre + " " + aPaterno + " " + aMaterno + \
-            " " + correoE + " " + edad + " " + semestre
+            " " + correoE + " " + sexo + " " + edad + " " + semestre
         archivo = nombre + "_" + aPaterno + "_" + aMaterno
         nuevaVentana = MenuUsuario.MenuUsuario(name=datos, archivo=archivo)
         self.children.append(nuevaVentana)
         self.close()
 
+    def keyPressEvent(self, event):
+        if event.key() == 16777220:
+            self.ingresarUsuario()
 
 def main():
     app = QtGui.QApplication(sys.argv)

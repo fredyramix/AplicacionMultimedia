@@ -36,7 +36,7 @@ class ReproductorMultimedia(QtGui.QWidget):
         self.closeThread = False
         self.datos = name
         self.nombreArchivo = archivo
-        self.setWindowIcon(QtGui.QIcon('icon.jpg'))
+        self.setWindowIcon(QtGui.QIcon('Icon/icon.jpg'))
         self.show()
 
     # Se acciona cuando se pulsa el boton
@@ -51,8 +51,8 @@ class ReproductorMultimedia(QtGui.QWidget):
             self.media.setCurrentSource(Phonon.MediaSource(self.ruta))
 
             # Se crea el hilo y se ejecuta
-            #self.t = threading.Thread(target=self.guardarDatos, args=(self.puerto, self.nombreArchivo, self.datos, ))
-            # self.t.start()
+            self.t = threading.Thread(target=self.guardarDatos, args=(self.puerto, self.nombreArchivo, self.datos, ))
+            self.t.start()
 
             # Se reproduce el video
             self.media.play()
@@ -63,8 +63,11 @@ class ReproductorMultimedia(QtGui.QWidget):
             self.button.setText('Detener')
         elif (newstate != Phonon.LoadingState and
               newstate != Phonon.BufferingState):
-            self.button.setText('Detener')
+            self.media.stop()
+            self.closeThread = True
             self.close()
+
+
             if newstate == Phonon.ErrorState:
                 source = self.media.currentSource().fileName()
                 print('ERROR: could not play:', source.toLocal8Bit().data())
@@ -82,9 +85,19 @@ class ReproductorMultimedia(QtGui.QWidget):
         tg = ThinkGearProtocol(puerto)
 
         for pkt in tg.get_packets():
-            for p in pkt:
-                if isinstance(p, ThinkGearEEGPowerData):
-                    archi.write(str(p.value) + "\n")
+            for powerData in pkt:
+                if isinstance(powerData, ThinkGearEEGPowerData):
+                    archi.write(str(powerData.value))
+            for meditation in pkt:
+                if isinstance(meditation, ThinkGearMeditationData):
+                    archi.write("Meditation: " + str(meditation.value) + ", ")
+            for attention in pkt:
+                if isinstance(attention, ThinkGearAttentionData):
+                    archi.write("Attention: " + str(attention.value) + ", ")
+            for poorSignal in pkt:
+                if isinstance(poorSignal, ThinkGearPoorSignalData):
+                    archi.write("PoorSignal: " + str(poorSignal.value) + "\n")
+
             if (self.closeThread):
                 archi.close()
                 tg.closeSerial()
@@ -94,11 +107,11 @@ class ReproductorMultimedia(QtGui.QWidget):
 def main():
     app = QtGui.QApplication(sys.argv)
     rutaE = "/Video/videoEstres.wmv"
-    rutaR = "/Video/videoRelajante.wmv"
+    rutaR = "/Video/videoRelajacion.wmv"
     datos = "Prueba"
     archivo = "P"
     main_window = ReproductorMultimedia(
-        name=datos, archivo=archivo + "Estres", ruta=rutaE)
+        name=datos, archivo=archivo + "Relajacion", ruta=rutaR)
     sys.exit(app.exec_())
 
 if __name__ == '__main__':

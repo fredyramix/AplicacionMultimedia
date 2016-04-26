@@ -5,7 +5,7 @@ import sys
 import os
 from PyQt4 import QtGui
 import ReproductorMultimedia
-import CuestionarioPrimeraParte
+import Cuestionario
 
 
 class MenuUsuario(QtGui.QWidget):
@@ -20,7 +20,7 @@ class MenuUsuario(QtGui.QWidget):
         self.datos = name
         self.archivo = archivo
         self.rutaEstres = "/Videos/videoEstres.wmv"
-        self.rutaRelajante = "/Videos/videoRelajante.wmv"
+        self.rutaRelajante = "/Videos/videoRelajacion.wmv"
         self.initUI()
 
     def initUI(self):
@@ -52,7 +52,7 @@ class MenuUsuario(QtGui.QWidget):
 
         self.setFixedSize(self.widWidth, self.widHigh)
         self.setWindowTitle('Menu de Usuario')
-        self.setWindowIcon(QtGui.QIcon('icon.jpg'))
+        self.setWindowIcon(QtGui.QIcon('Icon/icon.jpg'))
         self.show()
 
     def presentarContenidoMultimediaEstresor(self):
@@ -72,7 +72,7 @@ class MenuUsuario(QtGui.QWidget):
 
     def closeEvent(self, event):
         msg = QtGui.QMessageBox()
-        msg.setWindowIcon(QtGui.QIcon('icon.jpg'))
+        msg.setWindowIcon(QtGui.QIcon('Icon/icon.jpg'))
         msg.setWindowTitle('Aviso')
         msg.setText(u'¿Estás seguro de salir?')
         msg.addButton(QtGui.QPushButton('Aceptar'), QtGui.QMessageBox.YesRole)
